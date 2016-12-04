@@ -24,8 +24,8 @@ namespace mbpm2git
             }
             finally
             {
-                logger.Info("Press a key to quit..");
-                Console.ReadKey();
+                //logger.Info("Press a key to quit..");
+                //Console.ReadKey();
             }
         }
 
