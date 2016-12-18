@@ -50,6 +50,7 @@
     <Compile Include="Assets\Procedure.cs" />
     <Compile Include="Executer.cs" />
     <Compile Include="Operations\Extractor.cs" />
+    <Compile Include="Operations\FormatterForXML.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -18,12 +18,20 @@ namespace mbpm2git
         {
             string procedureName = string.Empty;
             string procedureDirecory = string.Empty;
+            bool formatExtractedXML = false;
 
             if (args.Length < 2)
             {
-                throw new Exception("use mbpm2git [procedure file path] [destination path]");
+                throw new Exception("use mbpm2git [procedure file path] [destination path] [format xml:true|false]");
             }
 
+            if (args.Length > 2)
+            {
+                if (args[2].ToLower() == "true".ToLower())
+                {
+                    formatExtractedXML = true;
+                }
+            }
             procedureName = args[0];
             logger.Debug("checking file {0}", procedureName);
             Procedure p = new Procedure(procedureName);
@@ -33,7 +41,13 @@ namespace mbpm2git
             DestinationFolder d = new DestinationFolder(procedureDirecory);
 
             Extractor.Execute(p, d);
-            logger.Info("Extracting done");
+            if (formatExtractedXML)
+            {
+                logger.Debug("formatting xml files..");
+                FormatterForXML.XmlSearch(d.FullName());
+            }
+            logger.Info("Extraction done");
+
  
         }
     }

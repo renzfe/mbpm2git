@@ -13,7 +13,6 @@ namespace mbpm2git.Operations
     class Extractor
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-
         
         public static void Execute(Procedure p, DestinationFolder d)
         {
