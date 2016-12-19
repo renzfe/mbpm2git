@@ -32,6 +32,7 @@ namespace mbpm2git
                     formatExtractedXML = true;
                 }
             }
+
             procedureName = args[0];
             logger.Debug("checking file {0}", procedureName);
             Procedure p = new Procedure(procedureName);
