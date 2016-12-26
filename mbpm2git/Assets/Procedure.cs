@@ -41,6 +41,11 @@ namespace mbpm2git.Assets
 
             if (!_path.Exists)
             {
+                _path = new FileInfo(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, path));
+            }
+
+            if (!_path.Exists)
+            {
                 throw new Exception("procedure file does not exist");
             }
 

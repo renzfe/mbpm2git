@@ -20,36 +20,36 @@ namespace mbpm2git
             string procedureDirecory = string.Empty;
             bool formatExtractedXML = false;
 
-            if (args.Length < 2)
+            var options = new Options();
+            if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                throw new Exception("use mbpm2git [procedure file path] [destination path] [format xml:true|false]");
-            }
+                procedureName = options.InputFile;
+                procedureDirecory = options.OutputPath;
 
-            if (args.Length > 2)
-            {
-                if (args[2].ToLower() == "true".ToLower())
+                if (options.FormatExtractedXML)
                 {
                     formatExtractedXML = true;
                 }
+
+                logger.Debug("checking file {0}", procedureName);
+                Procedure p = new Procedure(procedureName);
+
+                logger.Debug("checking destination folder {0}", procedureDirecory);
+                DestinationFolder d = new DestinationFolder(procedureDirecory);
+
+                Extractor.Execute(p, d);
+                if (formatExtractedXML)
+                {
+                    logger.Debug("formatting xml files..");
+                    FormatterForXML.XmlSearch(d.FullName());
+                }
+                logger.Info("Extraction done");
             }
-
-            procedureName = args[0];
-            logger.Debug("checking file {0}", procedureName);
-            Procedure p = new Procedure(procedureName);
-
-            procedureDirecory = args[1];
-            logger.Debug("checking destination folder {0}", procedureDirecory);
-            DestinationFolder d = new DestinationFolder(procedureDirecory);
-
-            Extractor.Execute(p, d);
-            if (formatExtractedXML)
+            else
             {
-                logger.Debug("formatting xml files..");
-                FormatterForXML.XmlSearch(d.FullName());
+                options.GetUsage();
             }
-            logger.Info("Extraction done");
-
- 
         }
+
     }
 }
