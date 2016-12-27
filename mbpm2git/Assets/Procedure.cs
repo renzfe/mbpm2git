@@ -15,7 +15,7 @@ namespace mbpm2git.Assets
         {
             bool lib = false;
 
-            if (_path.Extension.ToLower() == "xel".ToLower())
+            if (_path.Extension.ToLower() == ".xel".ToLower())
             {
                 lib = true;
             }
@@ -33,16 +33,17 @@ namespace mbpm2git.Assets
             return _path.Name;
         }
 
+        public string NameForDirectory()
+        {
+            string name4dir = Path.GetFileNameWithoutExtension(_path.Name);
+            return name4dir;
+        }
+
         public Procedure(string path)
         {
             _path = new FileInfo(path);
 
             if (_path == null) throw new Exception("invalid procedure path");
-
-            if (!_path.Exists)
-            {
-                _path = new FileInfo(Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, path));
-            }
 
             if (!_path.Exists)
             {

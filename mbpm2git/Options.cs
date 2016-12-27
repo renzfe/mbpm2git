@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommandLine;
 using CommandLine.Text;
+using System.Reflection;
 
 namespace mbpm2git
 {
@@ -20,19 +21,20 @@ namespace mbpm2git
         [Option('f', "formatxml", Required = false, HelpText = "Format xml file")]
         public bool FormatExtractedXML { get; set; }
 
-        //[Option("length", DefaultValue = -1, HelpText = "The maximum number of bytes to process.")]
-        //public int MaximumLength { get; set; }
+        [Option('c', "copy", Required = false, HelpText = "Copy xep or xel file")]
+        public bool CopyZippedFile { get; set; }
 
         [HelpOption]
         public string GetUsage()
         {
+            string v = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             var help = new HelpText
             {
-                Heading = new HeadingInfo("mbpm2git.exe", "" ),
+                Heading = new HeadingInfo("mbpm2git.exe", v ),
                 AdditionalNewLineAfterOption = false,
                 AddDashesToOption = true
             };
-            help.AddPreOptionsLine("Usage: mbpm2git.exe -i [xep file path] -o [output directory file path]");
+            help.AddPreOptionsLine("Usage: mbpm2git.exe -i xep_file_path -o output_directory_path [-f] [-c]");
             help.AddOptions(this);
 
             return help;

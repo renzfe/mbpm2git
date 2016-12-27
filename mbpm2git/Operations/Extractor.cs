@@ -26,7 +26,7 @@ namespace mbpm2git.Operations
 
             try
             {
-                string subFolder = Path.Combine(d.FullName(), p.Name());
+                string subFolder = Path.Combine(d.FullName(), p.NameForDirectory());
                 finalDestination = new DirectoryInfo(subFolder);
                 logger.Debug("checking procedure folder {0}..", finalDestination.FullName);
                 if (finalDestination.Exists) 

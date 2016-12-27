@@ -41,7 +41,8 @@ namespace mbpm2git.Assets
             }
             catch (Exception ex)
             {
-                logger.Debug(ex.Message);    
+                logger.Debug(ex.Message);
+                throw ex;
             }
         }
 

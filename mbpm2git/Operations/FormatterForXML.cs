@@ -52,6 +52,7 @@ namespace mbpm2git.Operations
             }
             catch(Exception ex)
             {
+                logger.Error("Error {0}", ex.Message);
                 logger.Error("Error converting {0}", filePath);
             }
 

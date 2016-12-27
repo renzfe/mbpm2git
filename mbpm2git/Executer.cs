@@ -18,31 +18,37 @@ namespace mbpm2git
         {
             string procedureName = string.Empty;
             string procedureDirecory = string.Empty;
-            bool formatExtractedXML = false;
 
             var options = new Options();
+
             if (CommandLine.Parser.Default.ParseArguments(args, options))
             {
                 procedureName = options.InputFile;
                 procedureDirecory = options.OutputPath;
 
-                if (options.FormatExtractedXML)
-                {
-                    formatExtractedXML = true;
-                }
-
-                logger.Debug("checking file {0}", procedureName);
+                logger.Debug("checking file: {0}", procedureName);
                 Procedure p = new Procedure(procedureName);
+                logger.Debug("procedure file: {0}", p.FullName());
 
-                logger.Debug("checking destination folder {0}", procedureDirecory);
+                logger.Debug("checking destination folder: {0}", procedureDirecory);
                 DestinationFolder d = new DestinationFolder(procedureDirecory);
+                logger.Debug("destination folder: {0}", d.FullName());
 
                 Extractor.Execute(p, d);
-                if (formatExtractedXML)
+
+                if (options.FormatExtractedXML)
                 {
                     logger.Debug("formatting xml files..");
                     FormatterForXML.XmlSearch(d.FullName());
                 }
+
+                if (options.CopyZippedFile)
+                {
+                    string dest = Path.Combine(d.FullName(), p.Name());
+                    logger.Debug("copy file {0}..", dest);
+                    File.Copy(p.FullName(), dest, true);
+                }
+
                 logger.Info("Extraction done");
             }
             else
